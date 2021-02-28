@@ -8,6 +8,8 @@ const postsRouter = require("./posts/posts");
 
 const app = express();
 
+const port = process.env.PORT || 8080;
+
 app.use(bodyParser.json());
 app.use(cors());
 app.use(express.json());
@@ -28,6 +30,6 @@ const errHandler = (err, req, res, next) => {
 
 app.use(errHandler);
 
-app.listen(80, () => {
-  console.log("listening at 80");
+app.listen(port, () => {
+  console.log(`listening at ${port}`);
 });
