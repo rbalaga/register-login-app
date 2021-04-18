@@ -1,17 +1,27 @@
 var express = require("express");
-var axios = require("axios");
+var request = require("request");
 
 var router = express.Router();
 router.route("/").get(async function (req, res, next) {
-  const response = axios.get("http://dev.codementor.io/api/sessions", {
-    headers: {
-      "x-codementor-api-key": "14f9ffcb7d4ed7efec12"
-    }
-  });
-  console.log("response: " + JSON.stringify(response));
-  const data = response.data;
-
-  res.json(data);
+  try {
+    const response = request(
+      {
+        url: "https://dev.codementor.io/api/sessions",
+        headers: {
+          "x-codementor-api-key": "14f9ffcb7d4ed7efec12"
+        }
+      },
+      (error, response, body) => {
+        if (!error && response.statusCode === 200) {
+          const data = JSON.parse(body);
+          res.json(data);
+        }
+      }
+    );
+  } catch (error) {
+    console.log("failed: " + error.message);
+    res.end("failed: " + error.message);
+  }
 });
 
 module.exports = router;
