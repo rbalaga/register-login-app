@@ -15,7 +15,7 @@ router.route("/").get(async function (req, res, next) {
       (error, response, body) => {
         if (!error && response.statusCode === 200) {
           const results = JSON.parse(body);
-          data = [...data, ...results];
+          data = [...data, ...results.data];
           request(
             {
               url: "https://dev.codementor.io/api/direct-payments",
@@ -26,7 +26,7 @@ router.route("/").get(async function (req, res, next) {
             (error, response, body) => {
               if (!error && response.statusCode === 200) {
                 const results = JSON.parse(body);
-                data = [...data, ...results];
+                data = [...data, ...results.data];
                 request(
                   {
                     url: "https://dev.codementor.io/api/freelance-jobs",
@@ -37,7 +37,7 @@ router.route("/").get(async function (req, res, next) {
                   (error, response, body) => {
                     if (!error && response.statusCode === 200) {
                       const results = JSON.parse(body);
-                      data = [...data, ...results];
+                      data = [...data, ...results.data];
                       res.json(data);
                     }
                   }
