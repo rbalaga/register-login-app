@@ -1,15 +1,16 @@
 var express = require("express");
 var request = require("request");
+var path = require("path");
 var fs = require("fs");
 
 var router = express.Router();
 const getLatestTime = () => {
-  fs.readFile(__dirname + "/latest", "utf8", (err, data) => {
+  fs.readFile(path.join(__dirname, "latest"), "utf8", (err, data) => {
     if (err) {
       console.error(err);
       return;
     }
-    console.log(data);
+    console.log("RAM: data from file: " + data);
     return data;
   });
 };
@@ -79,7 +80,7 @@ router
   })
   .post((req, res, next) => {
     latestTime = req.body.latestTime;
-    fs.writeFile(__dirname + "/latest", latestTime, (err) => {
+    fs.writeFile(path.join(__dirname, "/latest"), latestTime, (err) => {
       if (err) {
         console.error(err);
         return;
