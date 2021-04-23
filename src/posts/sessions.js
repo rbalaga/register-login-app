@@ -24,13 +24,13 @@ router
   })
   .post((req, res, next) => {
     latestTime = req.body.time;
-    fs.writeFile(path.join(__dirname, "latest"), latestTime, (err) => {
-      if (err) {
-        console.error(err);
-        return;
-      }
-      res.end("success");
-    });
+    try {
+      const data = fs.writeFileSync(path.join(__dirname, "latest"), latestTime);
+      //file written successfully
+      res.json(data);
+    } catch (err) {
+      console.error(err);
+    }
   });
 
 router.route("/").get(async function (req, res, next) {
