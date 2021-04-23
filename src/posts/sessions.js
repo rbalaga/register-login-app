@@ -9,10 +9,11 @@ const getLatestTime = () => {
       console.error(err);
       return;
     }
+    console.log(data);
     return data;
   });
 };
-let latestTime = parseInt(getLatestTime, 10);
+let latestTime = parseInt(getLatestTime(), 10);
 router.route("/time").get((req, res, next) => {
   res.send(latestTime);
 });
