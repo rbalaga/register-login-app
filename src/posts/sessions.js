@@ -6,7 +6,7 @@ var fs = require("fs");
 var router = express.Router();
 const getLatestTime = () => {
   try {
-    const data = fs.readFileSync("/Users/joe/test.txt", "utf8");
+    const data = fs.readFileSync(path.join(__dirname, "latest"), "utf8");
     console.log(data);
     return data;
   } catch (err) {
