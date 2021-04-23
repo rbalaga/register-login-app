@@ -16,7 +16,7 @@ const getLatestTime = () => {
 };
 let latestTime = getLatestTime();
 router.route("/time").get((req, res, next) => {
-  res.send(latestTime);
+  res.send("LATEST TIME:" + latestTime);
 });
 router
   .route("/")
