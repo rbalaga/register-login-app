@@ -5,7 +5,7 @@ var fs = require("fs");
 
 var router = express.Router();
 const getLatestTime = () => {
-  fs.readFile(path.join(__dirname, "latest"), "utf8", (err, data) => {
+  return fs.readFile(path.join(__dirname, "latest"), "utf8", (err, data) => {
     if (err) {
       console.error(err);
       return;
