@@ -4,7 +4,7 @@ var fs = require("fs");
 
 var router = express.Router();
 const getLatestTime = () => {
-  fs.readFile("./latest", "utf8", (err, data) => {
+  fs.readFile(__dirname + "/latest", "utf8", (err, data) => {
     if (err) {
       console.error(err);
       return;
@@ -79,7 +79,7 @@ router
   })
   .post((req, res, next) => {
     latestTime = req.body.latestTime;
-    fs.writeFile("./latest", latestTime, (err) => {
+    fs.writeFile(__dirname + "/latest", latestTime, (err) => {
       if (err) {
         console.error(err);
         return;
