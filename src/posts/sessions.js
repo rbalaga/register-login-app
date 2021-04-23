@@ -13,7 +13,9 @@ const getLatestTime = () => {
   });
 };
 let latestTime = parseInt(getLatestTime, 10);
-
+router.route("/time").get((req, res, next) => {
+  res.send(latestTime);
+});
 router
   .route("/")
   .get(async function (req, res, next) {
