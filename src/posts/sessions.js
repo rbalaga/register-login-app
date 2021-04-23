@@ -14,8 +14,8 @@ const getLatestTime = () => {
     return data;
   });
 };
-let latestTime = getLatestTime();
 router.route("/time").get((req, res, next) => {
+  let latestTime = getLatestTime();
   res.send("LATEST TIME:" + latestTime);
 });
 router
@@ -35,6 +35,7 @@ router
             const results = JSON.parse(body);
 
             data = [...data, ...results.data];
+            let latestTime = parseInt(getLatestTime(), 10);
             data = data.filter((d) => d.finished_at >= latestTime);
             request(
               {
@@ -79,7 +80,7 @@ router
     }
   })
   .post((req, res, next) => {
-    latestTime = req.body.latestTime;
+    let latestTime = req.body.latestTime;
     fs.writeFile(path.join(__dirname, "/latest"), latestTime, (err) => {
       if (err) {
         console.error(err);
