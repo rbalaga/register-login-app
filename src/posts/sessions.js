@@ -5,17 +5,19 @@ var fs = require("fs");
 
 var router = express.Router();
 const getLatestTime = () => {
-  return fs.readFile(path.join(__dirname, "latest"), "utf8", (err, data) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
-    console.log("RAM: data from file: " + data);
+  try {
+    const data = fs.readFileSync("/Users/joe/test.txt", "utf8");
+    console.log(data);
     return data;
-  });
+  } catch (err) {
+    console.error(err);
+    return 0;
+  }
 };
+
+let latestTime = parseInt(getLatestTime(), 10);
+
 router.route("/time").get((req, res, next) => {
-  let latestTime = getLatestTime();
   res.send("LATEST TIME:" + latestTime);
 });
 router
@@ -35,7 +37,6 @@ router
             const results = JSON.parse(body);
 
             data = [...data, ...results.data];
-            let latestTime = parseInt(getLatestTime(), 10);
             data = data.filter((d) => d.finished_at >= latestTime);
             request(
               {
@@ -80,7 +81,7 @@ router
     }
   })
   .post((req, res, next) => {
-    let latestTime = req.body.latestTime;
+    latestTime = req.body.latestTime;
     fs.writeFile(path.join(__dirname, "/latest"), latestTime, (err) => {
       if (err) {
         console.error(err);
