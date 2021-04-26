@@ -8,7 +8,7 @@ router.route("/").get(async function (req, res, next) {
   try {
     let data = [];
 
-    const latestTime = moment().startOf("week").unix();
+    const latestTime = moment().weekday(2).unix();
     const response = request(
       {
         url: "https://dev.codementor.io/api/sessions",
