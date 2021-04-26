@@ -1,41 +1,14 @@
 var express = require("express");
 var request = require("request");
-var path = require("path");
-var fs = require("fs");
+const moment = require("moment");
 
 var router = express.Router();
-const getLatestTime = () => {
-  try {
-    const data = fs.readFileSync(path.join(__dirname, "latest"), "utf8");
-    console.log(data);
-    return data;
-  } catch (err) {
-    console.error(err);
-    return 0;
-  }
-};
-
-let latestTime = parseInt(getLatestTime(), 10);
-
-router
-  .route("/time")
-  .get((req, res, next) => {
-    res.send("LATEST TIME:" + latestTime);
-  })
-  .post((req, res, next) => {
-    latestTime = req.body.time;
-    try {
-      const data = fs.writeFileSync(path.join(__dirname, "latest"), latestTime);
-      //file written successfully
-      res.json(data);
-    } catch (err) {
-      console.error(err);
-    }
-  });
 
 router.route("/").get(async function (req, res, next) {
   try {
     let data = [];
+
+    const latestTime = moment().startOf("week").unix();
     const response = request(
       {
         url: "https://dev.codementor.io/api/sessions",
